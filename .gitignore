@@ -1,0 +1,4 @@
+composer.lock
+vendor/*
+config_oauth*
+config.local.php
