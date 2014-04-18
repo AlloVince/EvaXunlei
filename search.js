@@ -28,7 +28,7 @@ $.noty.defaults = {
     force: false, // adds notification to the beginning of queue when set to true
     modal: false,
     maxVisible: 10, // you can set max visible notification for dismissQueue true option
-    closeWith: ['click'], // ['click', 'button', 'hover']
+    //closeWith: ['click'], // ['click', 'button', 'hover']
     callback: {
         onShow: function() {},
         afterShow: function() {},
@@ -51,21 +51,29 @@ window = this,
 undefined ,
 
 methods = window.av_xunlei = {
-	init : function(){
+    search : function(form) {
+        var q = $(form).find('input').val();
+        if(q && q != '') {
+            this.init(q);
+        }
+    },
+	init : function(q){
 		$.noty.closeAll();
 		var selectedText = null;
+        q = q ? q : null;
 	    if(window.getSelection){
 	        selectedText = window.getSelection();
 	    }else if(document.selection){
 	        selectedText = document.selection.createRange().text;
 	    }
+        selectedText = selectedText == '' ? q : selectedText;
 	    var notice = null;
 	    
-	    if(selectedText == '') {
-        	notice = noty({text:  '请选择要搜索的单词'});
+	    if(!selectedText || selectedText == '') {
+        	notice = noty({text:  '<form id="xlform" onsubmit="av_xunlei.search(this);return false;"><input type="search"><input type="submit" value="search"></form>'});
     	} else {
     		$.noty.close(notice);
-    		notice = noty({text:  '正在搜索'});
+    		notice = noty({text:  'Searching'});
 		    $.ajax({
 		        url : 'http://allovince.xunlei.com/?q=' + selectedText,
 		        dataType : 'jsonp',
@@ -73,7 +81,7 @@ methods = window.av_xunlei = {
 		        
 		        	$.noty.close(notice);
 		            if(!response || response.count < 1){
-		            	notice = noty({text:  '没有找到'});
+		            	notice = noty({text:  'Not found'});
 		                return false;
 		            }
 		        	
