@@ -214,8 +214,8 @@ if(!$keyword) {
     ));
     $cacheKey = md5($keyword);
     if (!$results = $cache->getItem($cacheKey)) {
-        $results = getResultsFromBtdigg($keyword);
-        $results += getResultsFromShousibaocai($keyword);
+        //$results = getResultsFromBtdigg($keyword);
+        $results = getResultsFromShousibaocai($keyword);
         $cache->setItem($cacheKey, $results);
     }
     toJSON($results);
