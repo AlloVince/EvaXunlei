@@ -17,7 +17,6 @@ function toJSON($results)
     echo $results;
 }
 
-/*
 function getResultsFromSobt($keyword)
 {
     $res = \Requests::get('http://so-bt.com/web.php?' . http_build_query(array(
@@ -59,7 +58,6 @@ function getResultsFromSobt($keyword)
 
     return $results;
 }
-*/
 
 function getResultsFromBtdigg($keyword)
 {
@@ -214,8 +212,7 @@ if(!$keyword) {
     ));
     $cacheKey = md5($keyword);
     if (!$results = $cache->getItem($cacheKey)) {
-        //$results = getResultsFromBtdigg($keyword);
-        $results = getResultsFromShousibaocai($keyword);
+        $results = getResultsFromSobt($keyword);
         $cache->setItem($cacheKey, $results);
     }
     toJSON($results);
