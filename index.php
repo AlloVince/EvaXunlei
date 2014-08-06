@@ -14,6 +14,7 @@ function toJSON($results)
     $results = json_encode($results);
     $results = $callback ? $callback . '(' . $results . ')' : $results;
     header('Content-Type:application/json');
+    header('Access-Control-Allow-Origin:*');
     echo $results;
 }
 
